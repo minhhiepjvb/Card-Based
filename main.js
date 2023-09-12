@@ -17,23 +17,22 @@ buttons.prev.addEventListener("click", () => swapCards("left"));
 
 const postAPI = 'https://dog.ceo/api/breeds/image/random'
 
-fetch(postAPI)
-    .then(function (respone) {
-        return respone.json();
-    })
-    .then(function (imageData) {
-        const imageCard = document.querySelectorAll(".card__image img");
-        const imageUrls = imageData.message;
+const imageCard = document.querySelectorAll(".card__image img");
+const imageBackground = document.querySelectorAll(".app__bg__image img")
 
-        imageCard.forEach((imageAPI) => {
-            imageAPI.src = imageUrls;
+for (let i = 0; i < 3; i++) {
+    fetch(postAPI)
+        .then(function (respone) {
+            return respone.json();
+        })
+        .then(function (imageData) {
+            const imageUrls = imageData.message;
+            imageCard[i].src = imageBackground[i].src = imageUrls;
+        })
+        .catch(function (err) {
+            console.log("[error]Có lỗi kho gọi API");
         });
-
-    })
-    .catch(function (err) {
-        console.log("error");
-    });
-
+}
 function swapCards(direction) {
     const currentCardEl = cardsContainerEl.querySelector(".current--card");
     const previousCardEl = cardsContainerEl.querySelector(".previous--card");
